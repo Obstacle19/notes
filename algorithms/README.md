@@ -135,7 +135,7 @@ $1≤n≤100000$
 - 算法第二步 `递归处理子问题` 为 `分治法`
 - 算法第三步 `合并子问题` 中的 `i = l, j = mid + 1` 为 `双指针算法`
 
-![3.gif](/figs/merge_sort)
+![3.gif](figs/merge_sort)
 
 > **代码模板**
 
@@ -696,7 +696,7 @@ $S[x_2+1,y_1]-=c,$
 $S[x_1,y_2+1]-=c,$
 $S[x_2+1,y_2+1]+=c$
 
-<img src="/figs/difference_matrix" alt="difference_matrix" style="zoom:50%;" />
+<img src="figs/difference_matrix" alt="difference_matrix" style="zoom:50%;" />
 
 > **代码模板**
 
@@ -1155,7 +1155,7 @@ int main() // 因为这题是找出左边第一个比他小的数，所以这是
 
 单调队列中元素索引与元素值关系如下图所示：
 
-<img src="./figs/monotonic_queue" alt="img" style="zoom:80%;" />
+<img src="figs/monotonic_queue" alt="img" style="zoom:80%;" />
 
 每次滑动时，队头元素都会滑出窗口范围。先判断队头元素是否还在单调队列中，若满足 `q.front() == a[i - k]` ，则队头元素出队；否则说明队头元素之前已经出队过了，无需再次出队。
 
@@ -1250,7 +1250,7 @@ ababa
 
 **$next[i]=j$ 表示 $p[1,j]=p[i-j+1,i]$ ，即 子串 $p$ 的 $1 \sim j$ 范围和 $i-j+1 \sim i$ 范围完全一致**
 
-<img src="./figs/kmp" alt="image-20241211002608703" style="zoom: 75%;" />
+<img src="figs/kmp" alt="image-20241211002608703" style="zoom: 75%;" />
 
 如上图所示，在匹配过程中，发现 $s$ 串的 $[i-j,i-1]$ 部分和 $p$ 串的 $[1,j]$ 部分完全相同，但是 $s[i]$ 不等于 $s[j+1]$ ，匹配失败
 
@@ -1364,15 +1364,15 @@ Yes
 
 - 初始化，所有节点的父节点指向自己
 
-<img src="/figs/disjoint_set_1" alt="12.png" style="zoom:80%;" />
+<img src="figs/disjoint_set_1" alt="12.png" style="zoom:80%;" />
 
 - 查找祖宗节点 + 路径压缩（如查询节点 1 的祖宗节点 4 ，将节点 1 路径上的父节点 2、3 全部插入到祖宗节点 4 后面）
 
-<img src="/figs/disjoint_set_2" alt="13.png" style="zoom:80%;" />
+<img src="figs/disjoint_set_2" alt="13.png" style="zoom:80%;" />
 
 - 合并两个集合，将集合 a 的祖宗节点嫁接到集合 b 的祖宗节点上
 
-<img src="/figs/disjoint_set_3" alt="image-20241029232120728" style="zoom:50%;" />
+<img src="figs/disjoint_set_3" alt="image-20241029232120728" style="zoom:50%;" />
 
 > **代码模板**
 
@@ -1900,7 +1900,7 @@ A 99
 
 为了线段树的节点不超过存储范围，一般线段树都要开 $4 \times n$ 的空间，即区间总长度的 $4$ 倍
 
-<img src="./figs/segment_tree.jpg" alt="segment_tree" style="zoom: 67%;" />
+<img src="figs/segment_tree.jpg" alt="segment_tree" style="zoom: 67%;" />
 
 > **代码模板**
 
@@ -2241,7 +2241,7 @@ $1≤n≤7$
 
 > **解析**
 
-![dfs_full_permutation](/figs/dfs_full_permutation)
+![dfs_full_permutation](figs/dfs_full_permutation)
 
 > **代码模板**
 
@@ -2513,7 +2513,7 @@ int main()
 
 一个如下的 $6 \times 6$ 的跳棋棋盘，有六个棋子被放置在棋盘上，使得每行、每列有且只有一个，每条对角线（包括两条主对角线的所有平行线）上至多有一个棋子。
 
-![](/figs/eight_queens)
+![](figs/eight_queens)
 
 上面的布局可以用序列 $2\ 4\ 6\ 1\ 3\ 5$ 来描述，第 $i$ 个数字表示在第 $i$ 行的相应位置有一个棋子，如下：
 
@@ -2664,7 +2664,7 @@ $1≤n,m≤100$
 
 从起点开始，往前走第一步，记录下所有第一步能走到的点，然后从所第一步能走到的点开始，往前走第二步，记录下所有第二步能走到的点，重复下去，直到走到终点。输出步数即可。
 
-<img src="/figs/bfs" alt="image-20241030172824685" style="zoom: 50%;" />
+<img src="figs/bfs" alt="image-20241030172824685" style="zoom: 50%;" />
 
 > **代码模板**
 
@@ -2884,7 +2884,7 @@ $图中涉及边长均不超过10000$。
 
 算法基于贪心的策略，思想如下图所示：
 
-<img src="/figs/dijkstra" alt="dijkstra" style="zoom: 80%;" />
+<img src="figs/dijkstra" alt="dijkstra" style="zoom: 80%;" />
 
 缺点：使用邻接矩阵的话，`n` 过大时会爆掉
 
@@ -3419,7 +3419,7 @@ $Prim$ 算法采用的是一种**贪心**的策略。
 
 每次将**离连通部分的最近的点**和**点对应的边**加入到连通部分，连通部分逐渐扩大，最后将整个图连通起来，并且边长之和最小。
 
-![image-prim](/figs/prim)
+![image-prim](figs/prim)
 
 > **代码模板**
 
@@ -3520,7 +3520,7 @@ $Kruskal$ 算法采用的也是一种**贪心**的策略。
 - 将所有边按权重**从小到大**排序
 - 枚举每条边 $a-b$ ，权重为 $c$ ，**如果 $a,b$ 不连通**，那么就将这条边加入集合中
 
-<img src="/figs/kruskal" alt="kruskal" style="zoom: 67%;" />
+<img src="figs/kruskal" alt="kruskal" style="zoom: 67%;" />
 
 实现方式为**并查集**的应用。
 
@@ -5903,7 +5903,7 @@ int main()
 
 如下图所示：
 
-![mondrian](./figs/mondrian)
+![mondrian](figs/mondrian)
 
 **输入格式**
 
@@ -5967,7 +5967,7 @@ $1≤N,M≤11$
 
 最终结果为 $f[m][0]$ ，表示前 $m - 1$ 列已经摆好，且第 $m$ 列没有任何延伸的方案数（因为只有 $m - 1$ 列，下标为 $[0, m - 1]$ ）
 
-<img src="./figs/state_compression_dp" style="zoom:150%;" />
+<img src="figs/state_compression_dp" style="zoom:150%;" />
 
 上图表示的即为输入为 $N = 6, M = 6$ 时， $f[2][(010010)_2]$ 的状态（红色为竖着的长方形，绿色为横着的长方形）。$f[2][010010]$ 表示前 $1$ 列（第 $0$ 列和第 $1$ 列）已经摆好，且从第 $1$ 列伸出到第 $2$ 列的长方形构成的状态为 $010010$ 时的方案数。二进制数 $010010$ 中的 $0$ 表示没有覆盖， $1$ 表示被覆盖
 
@@ -7175,7 +7175,7 @@ int main()
 
 # STL
 
-<img src="/figs/STL" alt="STL" style="zoom: 67%;" />
+<img src="figs/STL" alt="STL" style="zoom: 67%;" />
 
 ------
 

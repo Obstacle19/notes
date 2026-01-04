@@ -478,7 +478,7 @@
 
   - 多个**卷积层**（$Conv$）后接激活函数（$ReLU$），然后是可选的**池化层**（$Pooling$），最后是**全连接层**（$FC$）和激活函数（$ReLU$），最终输出通过 $Softmax$ 进行分类
 
-  <img src="./figs/CNN_work" alt="CNN" style="zoom: 50%;" />
+  <img src="figs/CNN_work" alt="CNN" style="zoom: 50%;" />
 
 - **防止过拟合**的操作
   - 数据增强
@@ -557,7 +557,7 @@
 
 - **Transformer 架构图**（以机器翻译的训练任务为例）：
 
-  <img src="./figs/Transformer" style="zoom: 67%;" />
+  <img src="figs/Transformer" style="zoom: 67%;" />
 
   - 模型的**输入**和**输出**
     - 输入：Inputs / Outputs（shifted right）

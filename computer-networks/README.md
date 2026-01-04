@@ -73,7 +73,7 @@
   $$
   d_{nodal} = d_{proc}+d_{queue}+d_{trans}+d_{prop}
   $$
-  <img src="./figs/fig4.jpg" alt="fig4" style="zoom:45%;" />
+  <img src="figs/fig4.jpg" alt="fig4" style="zoom:45%;" />
 
   - （计算时，区分传输时延与传播时延，区分 B 和 b ，1B = 8 bit）
 
@@ -177,7 +177,7 @@
     - 对于非持续连接，每个网页元素对象的传输都需要单独建立一个 TCP 连接
     - 对于持续连接，所有请求响应经一个单独的 TCP 连接发送
 
-<img src="./figs/fig1.jpg" style="zoom:50%;" />
+<img src="figs/fig1.jpg" style="zoom:50%;" />
 
 - 三次握手总的响应时间 $= 2 × RTT + t_{传输HTML文件时间} $
 
@@ -255,7 +255,7 @@
 
 - 电子邮件的收发过程：
 
-  <img src="./figs/fig2.jpg" alt="fig2" style="zoom: 55%;" />
+  <img src="figs/fig2.jpg" alt="fig2" style="zoom: 55%;" />
 
 - **SMTP** 是一个**推协议**，用的是 **TCP** 连接，端口号为 **25**
 
@@ -291,7 +291,7 @@
     - **迭代查询**
       - 请求主机到本地 DNS 服务器的查询是递归的，其余查询是迭代的
 
-    <img src="./figs/fig3.jpg" alt="fig3" style="zoom: 45%;" />
+    <img src="figs/fig3.jpg" alt="fig3" style="zoom: 45%;" />
 
   - 为了改善时延性能和减少报文传输， DNS 还广泛使用了**缓存技术**
 
@@ -374,7 +374,7 @@
 
   - 首部有 **8 字节**，由 4 个字段组成：**源端口号**，**目的端口号**，**长度**，**检验和**。每个字段都是 2 字节
 
-    <img src="./figs/fig5.jpg" alt="fig5" style="zoom: 42%;" />
+    <img src="figs/fig5.jpg" alt="fig5" style="zoom: 42%;" />
 
 - **UDP 检验和**提供了**差错检测**功能
   - 发送方对报文段中的所有 16 比特字的和进行反码运算，求和时遇到的任何溢出都被回卷
@@ -430,7 +430,7 @@
     - **序号**：该报文段首字节的字节流编号
     - **确认号**：主机 A 期望从主机 B 收到的下一字节的序号
 
-    <img src="./figs/fig6.jpg" alt="fig6" style="zoom:40%;" />
+    <img src="figs/fig6.jpg" alt="fig6" style="zoom:40%;" />
 
 - 往返时间的估计与超时
 
@@ -492,17 +492,17 @@
     - $LastByteSent$：已发送的最后一个字节
     - $LastByteAcked$：被确认的最后一个字节
 
-    <img src="./figs/fig7.jpg" alt="fig7" style="zoom:33%;" />
+    <img src="figs/fig7.jpg" alt="fig7" style="zoom:33%;" />
 
 - **TCP 连接管理**
 
   - TCP 连接的建立：**"三次握手"**
 
-    <img src="./figs/fig8.jpg" alt="fig8" style="zoom:50%;" />
+    <img src="figs/fig8.jpg" alt="fig8" style="zoom:50%;" />
 
   - TCP 连接的释放：**"四次挥手"**
 
-    <img src="./figs/fig9.jpg" alt="fig9" style="zoom:50%;" />
+    <img src="figs/fig9.jpg" alt="fig9" style="zoom:50%;" />
 
 ### 3.5 拥塞控制原理
 
@@ -549,7 +549,7 @@
   - 当出现超时丢包时，$cwnd$ 设置为 1，慢启动阈值 $ssthresh$ 值设置为检测到拥塞时的 $\left\lfloor cwnd/2 \right\rfloor$ ，重新开始慢启动
   - 当出现 3 个冗余 ACK 时， $ssthresh=\left\lfloor cwnd/2 \right\rfloor$，$cwnd=ssthresh+3MMS$ ，结束拥塞避免，进入快速恢复模式
 
-<img src="./figs/fig10.jpg" alt="fig10" style="zoom:50%;" />
+<img src="figs/fig10.jpg" alt="fig10" style="zoom:50%;" />
 
 - **快速重传**
   - 如果 TCP 发送方接收到对相同数据的 3 个冗余 ACK ，就立即重传相应的报文段
@@ -658,14 +658,14 @@
     - 首部检验和
     - **源和目的地址**：占 32 比特
 
-    <img src="./figs/fig11.jpg" alt="fig11" style="zoom: 50%;" />
+    <img src="figs/fig11.jpg" alt="fig11" style="zoom: 50%;" />
 
 - **IP 数据报分片**
   - **MTU**（最大传输单元）：链路层帧所携带的最大数据长度
 
   - **因为片偏移的单值是 8B ，所以除了最后一个片外，其他所有片的数据部分都为 8B 的倍数**
   
-    <img src="./figs/fig17.jpg" alt="fig17" style="zoom: 45%;" />
+    <img src="figs/fig17.jpg" alt="fig17" style="zoom: 45%;" />
   
 - **接口**：主机与物理链路之间的边界
   
@@ -705,7 +705,7 @@
     - DHCP 请求报文（Request）
     - DHCP ACK 报文（ACK）
 
-    <img src="./figs/fig12.jpg" alt="fig12" style="zoom: 45%;" />
+    <img src="figs/fig12.jpg" alt="fig12" style="zoom: 45%;" />
 
 - **网络地址转换（NAT）**：将专用网络地址转换为公用地址
 
@@ -718,7 +718,7 @@
     - 违背了端到端原则
     - 端口数量有限
 
-    <img src="./figs/fig13.jpg" alt="fig13" style="zoom: 40%;" />
+    <img src="figs/fig13.jpg" alt="fig13" style="zoom: 40%;" />
 
 - **IPv6 数据报**
   - 首部有 **40 字节**
@@ -778,7 +778,7 @@
 
   - 解决方法：**避免自同步，让每台路由器发送链路通告的时间随机化**
   
-    <img src="./figs/fig18.jpg" alt="fig18" style="zoom: 40%;" />
+    <img src="figs/fig18.jpg" alt="fig18" style="zoom: 40%;" />
   
 - **距离向量算法（DV）**
 
@@ -793,7 +793,7 @@
   - 解决方法：**增加毒性逆转**
     - 但涉及 3 个或更多节点的环路无法检测到
 
-<img src="./figs/fig14.jpg" alt="fig14" style="zoom: 45%;" />
+<img src="figs/fig14.jpg" alt="fig14" style="zoom: 45%;" />
 
 - **LS 与 DV 算法比较**
   - **消息复杂度**
@@ -854,7 +854,7 @@
     - 使用热土豆路由选择
     - 使用 BGP 标识符选择路由
 
-<img src="./figs/fig15.jpg" alt="fig15" style="zoom: 50%;" />
+<img src="figs/fig15.jpg" alt="fig15" style="zoom: 50%;" />
 
 ### 5.4 ICMP：因特网控制报文协议
 
@@ -978,7 +978,7 @@
 
     - 路由器的每个接口都有一个 IP 地址，一个 ARP 模块和一个适配器，源主机 A 向该子网的网关路由器 B 发送数据包，若主机 A 没有路由器 B 的MAC 地址，使用 ARP 寻址。网关路由器 B 向目标子网发送数据包，若网关路由器 B 没有目标主机 C 的 MAC ，使用 ARP 寻址
 
-    <img src="./figs/fig16.jpg" alt="fig16" style="zoom: 45%;" />
+    <img src="figs/fig16.jpg" alt="fig16" style="zoom: 45%;" />
 
 - **以太网**
   - **以太网帧结构**

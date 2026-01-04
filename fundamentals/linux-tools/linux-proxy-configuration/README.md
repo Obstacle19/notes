@@ -59,7 +59,7 @@
 
 - 运行成功后效果如下
 
-![clash](./figs/clash.jpg)
+![clash](figs/clash.jpg)
 
 ### 4. 修改代理环境变量
 

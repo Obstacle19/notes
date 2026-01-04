@@ -32,7 +32,7 @@
   - **运算器**
   - **控制器**
 
-<img src="./figs/fig1.jpg" alt="fig1" style="zoom:40%;" />
+<img src="figs/fig1.jpg" alt="fig1" style="zoom:40%;" />
 
 - **冯诺依曼结构**：以运算器为中心
 - **现代计算机结构**：以存储器为中心
@@ -46,7 +46,7 @@
     - 初始：指令、数据存入主存，$\text{PC}$ 指向第一条指令
     - 从主存中取指令放入 $\text{IR}$ ，$\text{PC}$ 自动加 $1$ ，$\text{CU}$ 分析指令，$\text{CU}$ 指挥其它部件执行指令
 
-<img src="./figs/fig2.jpg" alt="fig2" style="zoom: 45%;" />
+<img src="figs/fig2.jpg" alt="fig2" style="zoom: 45%;" />
 
 - **计算机软件**
   - **系统软件**：用来管理整个计算机系统
@@ -65,7 +65,7 @@
 
 - **从源程序到可执行文件**
 
-  <img src="./figs/fig3.jpg" alt="fig3" style="zoom: 67%;" />
+  <img src="figs/fig3.jpg" alt="fig3" style="zoom: 67%;" />
 
 ### 1.3 计算机的性能指标
 
@@ -148,7 +148,7 @@
 
   - > $\text{C}$ 语言中的定点整数是用**补码**存储的
 
-    <img src="./figs/fig13.jpg" alt="fig13" style="zoom: 67%;" />
+    <img src="figs/fig13.jpg" alt="fig13" style="zoom: 67%;" />
 
   - **强制类型转换**
 
@@ -193,7 +193,7 @@
 
   - 在**双精度浮点格式**（$\text{C}$ 语言中的 $\text{double}$）中，$s$、$exp$ 和 $frac$ 字段分别为 $1$ 位、$k=11$ 位和 $n=52$ 位，得到一个 $64$ 位的表示
 
-    <img src="./figs/fig14.jpg" alt="fig14" style="zoom:80%;" />
+    <img src="figs/fig14.jpg" alt="fig14" style="zoom:80%;" />
 
 - **浮点数的表示范围**
 
@@ -209,7 +209,7 @@
 
     - 数据下溢时，浮点数值趋近于 $0$，计算机将其当做机器零处理
 
-    <img src="./figs/fig15.jpg" alt="fig15" style="zoom: 80%;" />
+    <img src="figs/fig15.jpg" alt="fig15" style="zoom: 80%;" />
 
 - **数据的大小端存储**
   - **大端法**：先存储高位字节，后存储低位字节
@@ -230,9 +230,9 @@
     - $\text{Cache}$ 和主存可以直接被 $\text{CPU}$ 读写
   - **辅助存储器**（辅存、外存）
 
-<img src="./figs/fig4.jpg" alt="fig4" style="zoom: 75%;" />
+<img src="figs/fig4.jpg" alt="fig4" style="zoom: 75%;" />
 
-<img src="./figs/fig5.jpg" alt="fig5" style="zoom: 67%;" />
+<img src="figs/fig5.jpg" alt="fig5" style="zoom: 67%;" />
 
 - **存储器的分类（按介质分类）**
   - 半导体存储器：主存、$\text{Cache}$
@@ -267,7 +267,7 @@
 
   - 基本元件：$\text{MOS}$ 管、电容
 
-    <img src="./figs/fig7.jpg" alt="fig7" style="zoom: 70%;" />
+    <img src="figs/fig7.jpg" alt="fig7" style="zoom: 70%;" />
 
 - **$\text{SRAM}$ 芯片和 $\text{DRAM}$ 芯片**
 
@@ -275,7 +275,7 @@
 
   - $\text{DRAM}$，即动态 $\text{RAM}$，用于主存，读出后需要重写，运行速度慢
 
-    <img src="./figs/fig6.jpg" alt="fig6" style="zoom: 70%;" />
+    <img src="figs/fig6.jpg" alt="fig6" style="zoom: 70%;" />
 
 - **$\text{ROM}$ 芯片的分类**
   - 掩膜式只读存储器（$\text{MROM}$）
@@ -321,9 +321,9 @@
 
   - 高速缓存的结构可以用元组 $(S,E,B,m)$ 来表示，$\text{Cache}$ 的大小 $C = S\times E \times B$
 
-    <img src="./figs/fig8.jpg" alt="fig8" style="zoom:50%;" />
+    <img src="figs/fig8.jpg" alt="fig8" style="zoom:50%;" />
 
-    <img src="./figs/fig9.jpg" alt="fig9" style="zoom:50%;" />
+    <img src="figs/fig9.jpg" alt="fig9" style="zoom:50%;" />
 
 - **$\text{Cache}$ 和主存的映射方式**
 
@@ -401,7 +401,7 @@
 
     - 缺点：带宽低，负载重，多个部件只能争用唯一的总线，且不支持并行传送操作
 
-      <img src="./figs/fig10.jpg" alt="fig10" style="zoom:78%;" />
+      <img src="figs/fig10.jpg" alt="fig10" style="zoom:78%;" />
 
       > 单总线并不是指只有一根信号线，系统总线按传送信息的不同可以细分为地址总线、数据总线、控制总线
 
@@ -409,13 +409,13 @@
 
     - 有两条总线，一条是**主存总线**，用于 $\text{CPU}$、主存和通道之间进行数据传送；另一条是 **$\text{I/O}$ 总线**，用于多个外部设备与通道之间的数据传送
 
-      <img src="./figs/fig11.jpg" alt="fig11" style="zoom:67%;" />
+      <img src="figs/fig11.jpg" alt="fig11" style="zoom:67%;" />
 
   - **三总线结构**
 
     - 在计算机系统各部件之间采用三条各自独立的总线来构成信息通路，分别是**主存总线**、**$\text{I/O}$ 总线**和**直接内存访问（$\text{DMA}$）总线**
 
-      <img src="./figs/fig12.jpg" alt="fig12" style="zoom:70%;" />
+      <img src="figs/fig12.jpg" alt="fig12" style="zoom:70%;" />
 
 - **总线的性能指标**
   - 总线带宽

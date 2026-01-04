@@ -80,7 +80,7 @@
 
   - 内存管理
 
-    <img src="./figs/fig1.jpg" alt="fig1" style="zoom:50%;" />
+    <img src="figs/fig1.jpg" alt="fig1" style="zoom:50%;" />
 
 ### 1.4 操作系统的体系结构
 
@@ -95,7 +95,7 @@
   - 缺点：需要频繁地在内核态和用户态之间切换，性能低
   - 实例：$\text{HarmonyOS}$
 
-<img src="./figs/fig2.jpg" alt="fig2" style="zoom: 45%;" />
+<img src="figs/fig2.jpg" alt="fig2" style="zoom: 45%;" />
 
 ## 二、进程与线程
 
@@ -133,7 +133,7 @@
 
   - 转换
 
-    <img src="./figs/fig3.jpg" alt="fig3" style="zoom: 45%;" />
+    <img src="figs/fig3.jpg" alt="fig3" style="zoom: 45%;" />
 
 - **上下文切换**：让操作系统停止运行一个程序，并开始在给定的 $\text{CPU}$ 上运行另一个程序。即为当前正在执行的进程保存一些寄存器的值，并为即将执行的进程恢复一些寄存器的值
 
@@ -293,7 +293,7 @@
     - **步长调度**：每个工作都有自己的步长，这个步长和票数值成反比。当需要进行调度时，选择目前拥有最小行程值的进程，并且在运行之后将该进程的行程值增加一个步长
       - 彩票调度算法只能一段时间后，在概率上实现比例；而步长调度算法可以在每个调度周期后做到完全正确
     
-    <img src="./figs/fig4.jpg" alt="fig4" style="zoom: 67%;" />
+    <img src="figs/fig4.jpg" alt="fig4" style="zoom: 67%;" />
 
 - **多处理机调度**
   - 存在的问题
@@ -402,7 +402,7 @@
   - 数据段
   - 代码段
 
-  <img src="./figs/fig5.jpg" alt="fig5" style="zoom: 33%;" />
+  <img src="figs/fig5.jpg" alt="fig5" style="zoom: 33%;" />
 
 ### 3.2 虚拟内存管理
 
@@ -508,7 +508,7 @@
 
   - 评价 $\text{RAID}$ 的指标：容量、可靠性、性能
 
-    <img src="./figs/fig6.jpg" alt="fig6" style="zoom: 67%;" />
+    <img src="figs/fig6.jpg" alt="fig6" style="zoom: 67%;" />
 
 
 

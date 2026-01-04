@@ -6,7 +6,7 @@
 
 - **数据的逻辑结构**：分为线性结构和非线性结构
 
-  <img src="./figs/fig1.jpg" alt="fig1" style="zoom:50%;" />
+  <img src="figs/fig1.jpg" alt="fig1" style="zoom:50%;" />
 
 - **数据的存储结构**
 
