@@ -27,7 +27,7 @@
 - 下载 `clash` 配置文件 `config.yaml`
 
 ```shell
-[~/clash]$ wget -O config.yaml "https://cb3wv.no-mad-world.club/link/1kEiPhW9JcVdEufc?clash=3"
+[~/clash]$ wget -O config.yaml "https://cb3wv.no-mad-world.club/link/1kEiPhW9xxxxxxxx?clash=3"
 ```
 
 - 注意 `allow-lan` 需要设置成 `false`，不然流量跑完了
