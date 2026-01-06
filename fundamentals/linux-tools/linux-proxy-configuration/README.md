@@ -65,7 +65,7 @@
 
 - 运行成功后的界面示例如下：
 
-![fig1](figs/fig1.jpg)
+![fig1](figs/clash.jpg)
 
 ## 4. 修改代理环境变量
 
