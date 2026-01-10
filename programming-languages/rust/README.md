@@ -45,14 +45,14 @@ $ source $HOME/.cargo/env
 
 ### 2.1 变量和可变性
 
-- **变量**：默认是不可改变的（immutable），但可以在变量名前添加 `mut` 来使其可变
+- **变量**：默认是不可改变的（*immutable*），但可以在变量名前添加 `mut` 来使其可变
 
   ```rust
   let x = 5;
   let mut y = 6;
   ```
 
-- **常量** （constants）：是绑定到一个名称的不允许改变的值
+- **常量** （*constants*）：是绑定到一个名称的不允许改变的值
 
   1. 不允许对常量使用 `mut`
   2. 声明常量使用 `const` 关键字而不是 `let`，并且**必须**注明值的类型
@@ -62,7 +62,7 @@ $ source $HOME/.cargo/env
   const THREE_HOURS_IN_SECONDS: u32 = 60 * 60 * 3;
   ```
 
-- **遮蔽**（Shadowing）：指第一个变量被第二个变量遮蔽，此时任何使用该变量名的行为中都会视为是在使用第二个变量，直到第二个变量自己也被遮蔽或第二个变量的作用域结束。可以用相同变量名称来遮蔽一个变量，以及重复使用 `let` 关键字来多次遮蔽
+- **遮蔽**（*Shadowing*）：指第一个变量被第二个变量遮蔽，此时任何使用该变量名的行为中都会视为是在使用第二个变量，直到第二个变量自己也被遮蔽或第二个变量的作用域结束。可以用相同变量名称来遮蔽一个变量，以及重复使用 `let` 关键字来多次遮蔽
 
   1. 遮蔽再次使用 `let` 实际上创建了一个新变量，并且可以改变值的类型和复用这个名字
   2. 而 `mut` 相比于遮蔽，不可以改变值的类型
@@ -75,13 +75,13 @@ $ source $HOME/.cargo/env
       let x = x * 2; // x = 12
   } // x = 6
   ```
-  
+
   ```rust
   // 遮蔽可以改变值的类型
-  let spaces = "   ";
-  let spaces = spaces.len();
+  let spaces = "   "; // &str 类型
+  let spaces = spaces.len(); // usize 类型
   ```
-  
+
   ```rust:error
   // ❌ 错误示例：mut 不可以改变值的类型
   let mut spaces = "   ";
@@ -90,15 +90,15 @@ $ source $HOME/.cargo/env
 
 ### 2.2 数据类型
 
-- Rust 中，每一个值都有一个特定的**数据类型**（data type），数据类型分为**标量**（scalar）和**复合**（compound）
+- Rust 中，每一个值都有一个特定的 **数据类型**（*data type*），数据类型分为 **标量**（*scalar*）和 **复合**（*compound*）
 
-- Rust 是 **静态类型**（statically typed）语言，在编译时就必须知道所有变量的类型。当多种类型均有可能时，必须增加**类型注解**
+- Rust 是 **静态类型**（*statically typed*）语言，在编译时就必须知道所有变量的类型。当多种类型均有可能时，必须增加 **类型注解**
 
   ```rust
   let guess: u32 = "42".parse().expect("Not a number!"); // 增加类型注解 : u32
   ```
 
-- **标量类型**：Rust 有四种基本的标量类型：**整型**、**浮点型**、**布尔类型**和**字符类型**
+- **标量类型**：Rust 有四种基本的标量类型：**整型**、**浮点型**、**布尔类型 **和 **字符类型**
 
   1. 整型：没有小数部分的数字。`isize` 和 `usize` 类型依赖运行程序的计算机架构：64 位架构上它们是 64 位的，32 位架构上它们是 32 位的
 
@@ -111,24 +111,49 @@ $ source $HOME/.cargo/env
      | 128-bit  | `i128`  | `u128`  |
      | 架构相关 | `isize` | `usize` |
 
-  2. 浮点型
+     ```rust
+     let a: u64 = 12;
+     let b: u32 = 6;
+     println!("the sum is {}", a + (b as u64)); // as 强制类型转换
+     ```
+
+  2. 浮点型：Rust 的浮点数类型是 `f32` 和 `f64`，分别占 32 位和 64 位，默认类型是 `f64`。所有的浮点型都是有符号的
 
      ```rust
      let x = 2.0; // f64 类型
      let y: f32 = 3.0; // f32 类型
      ```
 
-  3. 布尔类型
+  3. 布尔类型：Rust 中的布尔类型有 `true` 和 `false` 两个可能的值，使用 `bool` 表示
 
-  4. 字符类型
+     ```rust
+     let t = true;
+     let f: bool = false; // 显示类型标注
+     ```
 
-- **复合类型**：可以将多个值组合成一个类型。Rust 有两个原生的复合类型：**元组**（tuple）和**数组**（array）
+  4. 字符类型：Rust 中的字符类型使用 `char` 表示，用单引号声明 `char` 字面值（使用双引号声明字符串字面值）。Rust 的 `char` 类型的大小为 4 个字节
+
+     ```rust
+     let c = 'z';
+     let z: char = 'ℤ'; // 显示类型标注
+     let heart_eyed_cat = '😻';
+     ```
+
+     | 语言 |  类型  |  字节大小  |                         核心说明                         |
+     | :--: | :----: | :--------: | :------------------------------------------------------: |
+     | Rust | `char` | **4 字节** | 表示 Unicode 标量值（UTF-32），可以比 ASCII 表示更多内容 |
+     | C++  | `char` | **1 字节** |            表示单个字节（ASCII / 扩展 ASCII）            |
+
+- **复合类型**：可以将多个值组合成一个类型。Rust 有两个原生的复合类型：**元组**（*tuple*）和**数组**（*array*）
 
   1. 元组类型：是一个将多个不同类型的值组合进一个复合类型的主要方式。元组长度固定，一旦声明，其长度不会增大或缩小
 
      ```rust
      let tup: (i32, f64, u8) = (500, 6.4, 1);
-     let (x, y, z) = tup; // 解构元组值
+     
+     let (x, y, z) = tup;
+     println!("The value of y is: {y}"); // 解构元组值，提取出元组第 2 个元素 y
+     
      let five_hundred = tup.0; // 用点号 (.) 后跟索引值来直接访问元组元素
      ```
 
@@ -143,11 +168,11 @@ $ source $HOME/.cargo/env
 
 ### 2.3 函数
 
-- **语句**和**表达式**
+- **语句** 和 **表达式**
 
-  1. 语句（Statements）是执行一些操作但不返回值的指令
+  1. 语句（*Statements*）是执行一些操作但不返回值的指令
 
-  2. 表达式（Expressions）计算并产生一个值
+  2. 表达式（*Expressions*）计算并产生一个值
 
      ```rust
      let y = {
@@ -158,9 +183,9 @@ $ source $HOME/.cargo/env
 
 - Rust 中通过输入 `fn` 后面跟着函数名和一对圆括号来定义函数
 
-  1. 可以定义为拥有 **参数**（parameters）的函数
+  1. 可以定义为拥有 **参数**（*parameters*）的函数。并且在函数签名中，**必须** 声明每个参数的类型
 
-  2. 函数可以向调用它的代码**返回值**
+  2. 函数可以向调用它的代码 **返回值**
 
      ```rust
      fn main() {
@@ -176,18 +201,18 @@ $ source $HOME/.cargo/env
 - Rust 中惯用的注释样式是以两个斜杠开始注释，并持续到本行的结尾
   1. 单行注释：使用 `//` 开头
   2. 多行注释：使用 `/*` 开头，`*/`结束
-  3. 文档注释：使用 `///` 或 `//!` 开头
+  3. 文档注释：使用 `///` 或 `//!` 开头（只有这个是 Rust 特有的，C++ 无原生支持）
 
 ### 2.5 控制流
 
 - `if` 表达式：允许根据条件执行不同的代码分支
 
-  1. 代码中的条件**必须**是 `bool` 值
+  1. 代码中的条件 **必须** 是 `bool` 值
   2. 可以在 `let` 语句右侧使用 `if` 表达式
-  3. `if` 的每个分支的可能的返回值都**必须**是相同类型
+  3. `if` 的每个分支的可能的返回值都 **必须** 是相同类型
 
   ```rust
-  // if、else if、else语句的基本用法
+  // if、else if、else 语句的基本用法
   let num = 6;
   if number % 3 == 0 {
       println!("number is divisible by 3");
@@ -219,7 +244,7 @@ $ source $HOME/.cargo/env
 - `loop` 关键字：重复执行一段代码直到明确要求停止
 
   1. 可以使用 `break` 关键字停止循环，`continue` 关键字跳过某次循环
-  2. 可以从循环返回值
+  2. `loop` 可以从循环返回值（`while` 和 `for` 都不能直接从循环返回值）
   3. 可以指定循环标签，将标签与 `break` 或 `continue` 一起使用
 
   ```rust
@@ -273,7 +298,7 @@ $ source $HOME/.cargo/env
 
 ### 3.1 什么是所有权
 
-- 变量作用域：是一个项（item）在程序中有效的范围
+- 变量作用域：是一个项（*item*）在程序中有效的范围
 
   ```rust
   {                      // s 在这里无效，它尚未声明
@@ -282,7 +307,7 @@ $ source $HOME/.cargo/env
   }                      // 此作用域已结束，s 不再有效
   ```
 
-- **所有权**（ownership）是 Rust 用于如何管理内存的一组规则
+- **所有权**（*ownership*）是 Rust 用于如何管理内存的一组规则
 
   > Rust 中的每一个值都有一个 **所有者**（owner）
   >
@@ -298,22 +323,22 @@ $ source $HOME/.cargo/env
      let s2 = s1; // s1 的所有权转移给了 s2，之后 s1 不再有效
      println!("{s1}, world!");
      ```
-     
+
      ```rust
      // 深度复制堆中数据
      let s1 = String::from("hello");
      let s2 = s1.clone();
      println!("s1 = {s1}, s2 = {s2}");
      ```
-     
+
   2. 对于整型这样存储在栈上的数据，拷贝实际的值是快速的
-  
+
      ```rust
      let x = 5;
      let y = x;
      println!("x = {x}, y = {y}");
      ```
-  
+
   3. 堆上的数据作为参数传入函数后，所有权转移。但是函数的返回值可以转移所有权
 
      ```rust
@@ -336,7 +361,7 @@ $ source $HOME/.cargo/env
          println!("{some_integer}");
      } // 这里，some_integer 移出作用域。没有特殊之处
      ```
-     
+
      ```rust
      // 通过返回值转移所有权
      fn main() {
@@ -360,9 +385,9 @@ $ source $HOME/.cargo/env
 
 ### 3.2 引用与借用
 
-- **引用**（*reference*）像一个指针，因为它是一个地址，可以由此访问储存于该地址的属于其他变量的数据。引用不获取所有权，但能访问数据，通过 `&` 符号创建
+- **引用**（*reference*）像一个指针，因为它是一个地址，可以由此访问储存于该地址的属于其他变量的数据。**引用不获取所有权**，但能访问数据，通过 `&` 符号创建
 
-  1. 引用分为**不可变引用**和**可变引用**，在任意给定时间，要么只能有一个可变引用，要么只能有多个不可变引用
+  1. 引用分为 **不可变引用** 和 **可变引用**，在任意给定时间，要么只能有一个可变引用，要么只能有多个不可变引用
   2. 引用必须总是有效的（Rust 编译器确保引用永远不会变成悬垂引用）
 
   ```rust
@@ -421,11 +446,11 @@ $ source $HOME/.cargo/env
 ### 5.1 枚举的定义
 
 - **枚举**（*enumerations*），也被称作 *enums*，允许通过列举可能的**变体**（*variants*）来定义一个类型
-  
-  1. 可以**枚举**出所有可能的值
+
+  1. 可以 **枚举** 出所有可能的值
   2. 每个变体可以处理不同类型和数量的数据
   3. 可以使用 `impl` 来为枚举定义方法
-  
+
   ```rust
   // 枚举的基本用法
   enum Message {
@@ -454,7 +479,7 @@ $ source $HOME/.cargo/env
       }
   }
   ```
-  
+
   ```rust
   // 使用 impl 来为枚举定义方法
   impl Message {
@@ -466,12 +491,12 @@ $ source $HOME/.cargo/env
   m.call();
   ```
 
-- `Option<T>` 是**标准库**定义的一个枚举，编码了一个值要么有值要么没值的场景
+- `Option<T>` 是 **标准库** 定义的一个枚举，编码了一个值要么有值要么没值的场景
 
   1. Rust 并没有很多其他语言中有的空值功能。**空值**（*Null* ）是一个值，代表没有值
   2. `Option<T>` 枚举被包含在了 prelude 之中，无需将其显式引入作用域，可以直接使用
   3. 在对 `Option<T>` 进行运算之前必须将其转换为 `T`（使用 `unwarp()` 或 `match` 模式匹配）
-  4. 只要一个值不是 `Option<T>` 类型，就**可以**安全的认定它的值不为空
+  4. 只要一个值不是 `Option<T>` 类型，就 **可以** 安全的认定它的值不为空
 
   ```rust
   // Rust 标准库中 Option<T> 的定义
@@ -489,7 +514,7 @@ $ source $HOME/.cargo/env
   2. 如果想要在分支中运行多行代码，可以使用大括号，而分支后的逗号是可选的
   3. 每个分支相关联的代码是一个表达式，而表达式的结果值将作为整个 `match` 表达式的返回值
   4. `match` 的分支**必须覆盖所有的可能性**，不然就会报错（可以用 `other` 或 `_` 占位符匹配其他所有值）
-  
+
   ```rust
   enum Coin {
       Penny,
@@ -509,7 +534,7 @@ $ source $HOME/.cargo/env
       }
   }
   ```
-  
+
   ```rust:error
   // ❌ 错误示例：match 分支必须覆盖所有的可能性，这里没有覆盖 None
   fn plus_one(x: Option<i32>) -> Option<i32> {
@@ -518,7 +543,7 @@ $ source $HOME/.cargo/env
       }
   }
   ```
-  
+
   ```rust
   // 使用 other 或 _ 占位符匹配其他所有值
   let roll = 9;
@@ -620,7 +645,7 @@ $ source $HOME/.cargo/env
   2. `use` 的习惯用法：函数优先引入父模块以明确来源、结构体 / 枚举直接引入完整路径、同名项需要通过父模块区分
   3. 可以使用嵌套路径来清理大量的 `use` 列表
   4. `pub` 与 `use` 组合使用的方法被称为**重导出**，可以让作用域之外的代码能够像在当前作用域中一样使用该名称
-  
+
   ```rust
   // 使用 use 创建的捷径
   mod front_of_house {
@@ -633,7 +658,7 @@ $ source $HOME/.cargo/env
       hosting::add_to_waitlist();
   }
   ```
-  
+
   ```rust:error
   // ❌ 错误示例：子模块无法直接访问父模块中 use 引入的路径
   mod front_of_house {
@@ -648,7 +673,7 @@ $ source $HOME/.cargo/env
       }
   }
   ```
-  
+
   ```rust
   // 将 hosting 引入到 customer 模块中
   mod front_of_house {
@@ -663,19 +688,19 @@ $ source $HOME/.cargo/env
       }
   }
   ```
-  
+
   ```rust
   // 未经嵌套的 use 路径
   use std::cmp::Ordering;
   use std::io;
   use std::io::Write;
   ```
-  
+
   ```rust
   // 嵌套后的 use 路径
   use std::{cmp::Ordering, io::{self, Write}};
   ```
-  
+
 - `as` 关键字可以指定一个新的本地名称或者**别名**
 
   ```rust
@@ -703,9 +728,10 @@ $ source $HOME/.cargo/env
 ### 7.1 使用 Vector 储存列表
 
 - `Vec<T>`类型也被称为 vector，允许在一个单独的数据结构中储存多个值，它在内存中彼此相邻地排列所有的值
+
   1. vector 只能储存相同类型的值
   2. vector 是用泛型实现的
-  
+
 - vector 的**方法函数**
 
   1. 新建 vector
@@ -765,7 +791,7 @@ $ source $HOME/.cargo/env
       println!("{i}");
   }
   ```
-  
+
   ```rust
   // 遍历 vector 中元素的可变引用
   let mut v = vec![100, 32, 57];
@@ -773,7 +799,7 @@ $ source $HOME/.cargo/env
       *i += 50;
   }
   ```
-  
+
   5. 使用枚举来存储多种类型
 
   ```rust
@@ -787,6 +813,7 @@ $ source $HOME/.cargo/env
       SpreadsheetCell::Text(String::from("blue")),
       SpreadsheetCell::Float(10.12),
   ];
+  ```
 
 ### 7.2 使用字符串储存 UTF-8 编码的文本
 
@@ -800,12 +827,12 @@ $ source $HOME/.cargo/env
   // 新建一个空的 String
   let mut s = String::new();
   ```
-  
+
   ```rust
   // 使用 to_string 方法从字符串字面值创建 String
   let s = "initial contents".to_string();
   ```
-  
+
   ```rust
   // 使用 String::from 函数从字符串字面值创建 String
   let s = String::from("initial contents");
@@ -818,20 +845,20 @@ $ source $HOME/.cargo/env
   let mut s = String::from("foo");
   s.push_str("bar");
   ```
-  
+
   ```rust
   // 使用 push 将一个字符加入 String 值中
   let mut s = String::from("lo");
   s.push('l');
   ```
-  
+
   ```rust
   // 使用 + 运算符将两个 String 值合并到一个新的 String 值中
   let s1 = String::from("Hello, ");
   let s2 = String::from("world!");
   let s3 = s1 + &s2; // 注意 s1 被移动了，不能继续使用
   ```
-  
+
   ```rust
   // 使用 format! 宏返回 String 值
   let s1 = String::from("tic");
@@ -845,9 +872,9 @@ $ source $HOME/.cargo/env
   let s = String::from("I like dogs");
   let s1 = s.replace("dogs", "cats"); // 此时 s 为 String::from("I like cats")
   ```
-  
+
   3. 字符串索引
-  
+
   ```rust
   // 无法通过索引的方式去访问字符串中的某个字符，但是可以使用切片的方式 &s1[start..end]，且需要保证 start 和 end 必须准确落在字符的边界处
   let s1 = String::from("hi,中国");
@@ -856,9 +883,9 @@ $ source $HOME/.cargo/env
   let h1 = &s1[3..6];// `中` 字符在 UTF-8 格式中需要 3 个字节来表示
   assert_eq!(h1, "中");
   ```
-  
+
   4. 遍历字符串的方法
-  
+
   ```rust
   // 调用 chars 方法将其分开并返回两个 char 类型的值
   for c in "Зд".chars() { // 也可以用 for c in String::from("Зд").chars()
@@ -868,7 +895,7 @@ $ source $HOME/.cargo/env
   // З
   // д
   ```
-  
+
   ```rust
   // 调用 bytes 方法返回每一个原始字节
   for b in "Зд".bytes() {
@@ -880,7 +907,6 @@ $ source $HOME/.cargo/env
   // 208
   // 180
   ```
-  
 
 ### 7.3 使用 Hash Map 储存键值对
 
@@ -999,7 +1025,7 @@ $ source $HOME/.cargo/env
       }
   }
   ```
-  
+
   ```rust
   // 传播错误示例：语法糖简化
   use std::fs::File;
@@ -1064,7 +1090,7 @@ $ source $HOME/.cargo/env
 
 ### 9.2 Trait：定义共同行为
 
--  **trait** 是一种将方法签名组合起来的方法，用于定义共同行为（类似于其他语言中的**接口**（*interfaces*）的功能）
+- **trait** 是一种将方法签名组合起来的方法，用于定义共同行为（类似于其他语言中的**接口**（*interfaces*）的功能）
 
   1. 可以包含**仅有签名的方法**，也可以包含**带有默认实现的方法**
   2. 若 trait 中包含无默认实现的方法签名，实现该 trait 的类型必须提供这些方法的具体实现
@@ -1141,7 +1167,7 @@ $ source $HOME/.cargo/env
   1. 多数情况下，生命周期是隐式的、可被推断的
   1. 当引用的生命周期可能以不同的方式互相关联时，需要手动显式标注生命周期
   1. Rust 编译器有借用检查器（*borrow checker*），通过比较作用域来确保所有的借用都是有效的
-  
+
   ```rust:error
   // ❌ 错误示例：悬垂引用
   fn main() {
@@ -1153,7 +1179,7 @@ $ source $HOME/.cargo/env
       println!("r: {r}");   //          |
   }                         // ---------+
   ```
-  
+
 - **生命周期标注语法**
 
   1. 生命周期的标注不会改变引用的生命周期长度，只是用于描述多个引用的生命周期间的关系
@@ -1213,15 +1239,15 @@ $ source $HOME/.cargo/env
 ### 10.1 如何编写测试
 
 - Rust 提供了专门用来编写**测试**的功能：`test` 属性、`assert!`/`assert_eq!`/`assert_ne!` 等断言类宏和 `should_panic` 属性
-  
+
   1. `cargo test` 命令会运行项目中所有的测试
   2. `#[cfg(test)]` 是 Rust 的条件编译属性，只有运行 `cargo test` 时，被它标记的代码才会被编译和包含到最终产物中
   3. `#[test]` 是 Rust 测试框架的测试用例标记属性，作用是将普通函数标记为测试用例，运行测试时自动执行，且只能标记函数。发生 panic 表示测试失败
-  
+
   ```shell
   $ cargo test # 运行项目中所有的测试
   ```
-  
+
 - **测试函数体**通常执行如下三种操作：
 
   1. 设置任何所需的数据或状态
@@ -1256,7 +1282,7 @@ $ source $HOME/.cargo/env
   2. `assert_eq!` 宏由标准库提供，需要向其提供两个待比较的值作为参数。它会对这两个值执行相等性判断：如果值相等，`assert_eq!` 什么也不做（测试通过）；如果值不相等，`assert_eq!` 会调用 `panic!` 宏（导致测试失败），并自动打印两个值的具体内容
   3. `assert_ne!` 宏由标准库提供，需要向其提供两个待比较的值作为参数。它会对这两个值执行不等性判断：如果值不相等，`assert_ne!` 什么也不做（测试通过）；如果值相等，`assert_ne!` 会调用 `panic!` 宏（导致测试失败），并自动打印两个值的具体内容
   4. 可以向 `assert!`、`assert_eq!` 和 `assert_ne!` 宏传递一个可选的失败信息参数，可以在测试失败时将自定义失败信息一同打印出来
-  
+
   ```rust
   // assert! 宏在测试用例中的使用
   #[cfg(test)]
@@ -1268,7 +1294,7 @@ $ source $HOME/.cargo/env
       }
   }
   ```
-  
+
   ```rust:error
   // ❌ 错误示例：assert! 触发 panic
   #[cfg(test)]
@@ -1280,7 +1306,7 @@ $ source $HOME/.cargo/env
       }
   }
   ```
-  
+
   ```rust
   // assert_eq! 宏在测试用例中的使用
   pub fn add_two(a: usize) -> usize {
@@ -1296,7 +1322,7 @@ $ source $HOME/.cargo/env
       }
   }
   ```
-  
+
   ```rust
   // assert_ne! 宏在测试用例中的使用
   pub fn add_two(a: usize) -> usize {
@@ -1312,7 +1338,7 @@ $ source $HOME/.cargo/env
       }
   }
   ```
-  
+
   ```rust:error
   // ❌ 错误示例：assert! 触发 panic，并打印自定义的失败信息
   pub fn greeting(name: &str) -> String {
