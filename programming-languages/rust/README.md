@@ -12,15 +12,14 @@
 
 ### 1.2 下载和安装
 
-可以按照以下步骤下载和安装 `Rust`
+- 可以按照以下步骤下载和安装 `Rust`
+  1. 官网提供的 Linux 系统的安装命令如下：
 
-1. 官网提供的 Linux 系统的安装命令如下
+    ```shell
+    $ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+    ```
 
-   ```shell
-   $ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-   ```
-
-2. 如果无法下载，尝试下面方法
+  2. 如果无法下载，尝试下面方法：
 
    ```shell
    # 1. 下载脚本 (使用镜像加速)
@@ -35,11 +34,11 @@
    > ./rustup.sh
    ```
 
-然后激活环境变量
+  3. 然后激活环境变量
 
-```shell
-$ source $HOME/.cargo/env
-```
+    ```shell
+    $ source $HOME/.cargo/env
+    ```
 
 ## 2. 常见编程概念
 
@@ -513,14 +512,14 @@ $ source $HOME/.cargo/env
   1. 模式可以由字面值、变量、通配符和许多其他内容构成
   2. 如果想要在分支中运行多行代码，可以使用大括号，而分支后的逗号是可选的
   3. 每个分支相关联的代码是一个表达式，而表达式的结果值将作为整个 `match` 表达式的返回值
-  4. `match` 的分支**必须覆盖所有的可能性**，不然就会报错（可以用 `other` 或 `_` 占位符匹配其他所有值）
+  4. `match` 的分支 **必须覆盖所有的可能性**，不然就会报错（可以用 `other` 或 `_` 占位符匹配其他所有值）
 
   ```rust
   enum Coin {
       Penny,
       Nickel,
       Dime,
-      Quarter,
+      Quarter(UsState),
   }
   fn value_in_cents(coin: Coin) -> u8 {
       match coin {
@@ -530,11 +529,14 @@ $ source $HOME/.cargo/env
           }, // 这里的逗号是可选地，可以写也可以不写
           Coin::Nickel => 5,
           Coin::Dime => 10,
-          Coin::Quarter => 25,
+          Coin::Quarter(state) => {
+              println!("State quarter from {state:?}!"); // :? 是调试打印符
+              25
+          }
       }
   }
   ```
-
+  
   ```rust:error
   // ❌ 错误示例：match 分支必须覆盖所有的可能性，这里没有覆盖 None
   fn plus_one(x: Option<i32>) -> Option<i32> {
@@ -543,7 +545,7 @@ $ source $HOME/.cargo/env
       }
   }
   ```
-
+  
   ```rust
   // 使用 other 或 _ 占位符匹配其他所有值
   let roll = 9;
@@ -563,7 +565,7 @@ $ source $HOME/.cargo/env
   2. 可以在 `if let` 中包含一个 `else`。`else` 块中的代码与 `match` 表达式中的 `_` 分支块中的代码相同
 
   ```rust
-  let config_max = Some(3u8);
+  let config_max = Some(3u8); // 或者 let config_max: Option<u8> = Some(3);
   if let Some(max) = config_max {
       println!("The maximum is configured to be {max}");
   } else {
@@ -571,17 +573,37 @@ $ source $HOME/.cargo/env
   }
   ```
 
-- `let...else`
+- `let...else` 用于这样一种常见模式：如果值匹配某个模式，就继续向下执行；如果不匹配，则立即从当前函数返回
 
+  1. `let ... else` 没有 `if` 分支
+  2. 当模式匹配时，绑定的变量会直接进入外层作用域
+  3. `else` 分支中必须改变控制流
 
+  ```rust
+  // 传统的 if let 写法
+  fn get_len(s: Option<String>) -> usize {
+      let s = if let Some(s) = s {
+          s
+      } else {
+          return 0;
+      };
+      s.len()
+  }
+  ```
 
-
-
-
+  ```rust
+  // let else 愉快路径写法
+  fn get_len(s: Option<String>) -> usize {
+      let Some(s) = s else {
+          return 0;
+      };
+      s.len()
+  }
+  ```
 
 ## 6. 使用包、Crate 和模块管理项目
 
-- 一个包（*package*）可以包含多个**二进制 crate** 项和一个可选的**库 crate**
+- 一个包（*package*）可以包含多个 **二进制 crate** 项和一个可选的 **库 crate**
 
 > - **包**（*Packages*）：Cargo 的一个功能，它允许构建、测试和分享 crate
 > - **Crates** ：一个模块的树形结构，它形成了库或可执行文件项目
@@ -595,7 +617,7 @@ $ source $HOME/.cargo/env
   1. 包会包含一个 *Cargo.toml* 文件，阐述如何去构建这些 crate
   2. 包中至多可以包含一个库 crate，可以包含任意多个二进制 crate，但必须至少包含一个 crate
 
-- crate 有**二进制 crate** 和**库 crate** 两种形式
+- crate 有 **二进制 crate** 和 **库 crate** 两种形式
 
   ```shell
   # 创建二进制 crate，在 my_binary_crate/src/main.rs 中编写代码
@@ -622,8 +644,8 @@ $ source $HOME/.cargo/env
 > - **私有 vs 公用**：**一个模块里的代码默认对其父模块私有**。为了使一个模块公用，应当在声明时使用 `pub mod` 替代 `mod`。为了使一个公用模块内部的成员公用，应当在声明前使用`pub`
 > - **`use` 关键字**：在一个作用域内，`use`关键字创建了一个项的快捷方式，用来减少长路径的重复。在任何可以引用 `crate::garden::vegetables::Asparagus` 的作用域，可以通过 `use crate::garden::vegetables::Asparagus;` 创建一个快捷方式，然后你就可以在作用域中只写 `Asparagus` 来使用该类型
 
-- 使用 `mod` 关键字定义**模块**，可以将一个 crate 中的代码进行分组，以提高可读性与重用性
-  1. 模块中的代码默认是私有的，可以利用模块控制项的**私有性**（*privacy*）
+- 使用 `mod` 关键字定义 **模块**，可以将一个 crate 中的代码进行分组，以提高可读性与重用性
+  1. 模块中的代码默认是私有的，可以利用模块控制项的 **私有性**（*privacy*）
 
 ### 6.3 引用模块树中项的路径
 
@@ -634,17 +656,59 @@ $ source $HOME/.cargo/env
 
 - `pub` 关键字用于控制模块的可见性
   1. 使模块公有并不使其内容也是公有的
-  2. 对于结构体，结构体定义的前面使用了 `pub`，这个结构体会变成公有的，但是这个结构体的字段仍然是私有的
-  3. 对于枚举，枚举定义的前面使用了 `pub`，则它的所有变体都将变为公有
+  2. 对于 **结构体**，结构体定义的前面使用了 `pub`，这个结构体会变成公有的，但是这个结构体的字段仍然是私有的
+  3. 对于 **枚举**，枚举定义的前面使用了 `pub`，则它的所有变体都将变为公有
+  
+  ```rust:error
+  // ❌ 错误示例：没有将 hosting 模块和 add_to_waitlist() 函数标记为公有的
+  mod front_of_house {
+      mod hosting {
+          fn add_to_waitlist() {}
+      }
+  }
+  pub fn eat_at_restaurant() {
+      // 绝对路径
+      crate::front_of_house::hosting::add_to_waitlist();
+      // 相对路径
+      front_of_house::hosting::add_to_waitlist();
+  }
+  ```
+  
+  ```rust
+  // 将 hosting 模块和 add_to_waitlist() 函数标记为公有的，就可以在 eat_at_restaurant() 中使用了
+  mod front_of_house {
+      pub mod hosting {
+          pub fn add_to_waitlist() {}
+      }
+  }
+  pub fn eat_at_restaurant() {
+      // 绝对路径
+      crate::front_of_house::hosting::add_to_waitlist();
+      // 相对路径
+      front_of_house::hosting::add_to_waitlist();
+  }
+  ```
+  
+  ```rust
+  // 使用以 super 开头的相对路径调用函数
+  fn deliver_order() {}
+  mod back_of_house {
+      fn fix_incorrect_order() {
+          cook_order();
+          super::deliver_order();
+      }
+      fn cook_order() {}
+  }
+  ```
 
 ### 6.4 使用 use 关键字将路径引入作用域
 
-- `use` 关键字可以创建一个**捷径**，在作用域中的任何地方使用这个更短的名字
+- `use` 关键字可以创建一个 **捷径**，在作用域中的任何地方使用这个更短的名字
 
   1. `use` 只能创建 `use` 所在的特定作用域内的捷径
   2. `use` 的习惯用法：函数优先引入父模块以明确来源、结构体 / 枚举直接引入完整路径、同名项需要通过父模块区分
   3. 可以使用嵌套路径来清理大量的 `use` 列表
-  4. `pub` 与 `use` 组合使用的方法被称为**重导出**，可以让作用域之外的代码能够像在当前作用域中一样使用该名称
+  4. `pub` 与 `use` 组合使用的方法被称为 **重导出**，可以让作用域之外的代码能够像在当前作用域中一样使用该名称
 
   ```rust
   // 使用 use 创建的捷径
@@ -701,7 +765,7 @@ $ source $HOME/.cargo/env
   use std::{cmp::Ordering, io::{self, Write}};
   ```
 
-- `as` 关键字可以指定一个新的本地名称或者**别名**
+- `as` 关键字可以指定一个新的本地名称或者 **别名**
 
   ```rust
   use std::fmt::Result;
@@ -710,7 +774,15 @@ $ source $HOME/.cargo/env
 
 - 使用外部包
 
-- glob 运算符将一个路径下**所有**公有项引入作用域，在指定路径后跟 `*` glob 运算符
+  1. 先在 `Cargo.toml` 中添加依赖（如 `rand = "0.8.5"`），再通过 `use` 将包中的类型或 trait 引入作用域
+  2. 标准库 `std` 同样是外部 crate，但随 Rust 一起分发，只需 `use std::...`，无需在 `Cargo.toml` 中声明（如 `use std::collections::HashMap`）
+
+  ```toml
+  # Cargo.toml
+  rand = "0.8.5"
+  ```
+
+- glob 运算符将一个路径下 **所有** 公有项引入作用域，在指定路径后跟 `*` glob 运算符
 
   1. 需要小心使用，glob 会使得我们难以推导作用域中有什么名称和它们是在何处定义的
 
@@ -722,6 +794,23 @@ $ source $HOME/.cargo/env
 ### 6.5 将模块拆分成多个文件
 
 - Rust 允许将一个包拆分为多个 crate，并将一个 crate 拆分为若干模块，从而可以在一个模块中引用另一个模块中定义的项
+
+  ```rust
+  // 将模块拆分成多个文件示例
+  
+  // src/lib.rs
+  mod front_of_house;
+  pub use crate::front_of_house::hosting;
+  pub fn eat_at_restaurant() {
+      hosting::add_to_waitlist();
+  }
+  
+  // src/front_of_house.rs
+  pub mod hosting;
+  
+  // src/front_of_house/hosting.rs
+  pub fn add_to_waitlist() {}
+  ```
 
 ## 7. 常见集合
 
